@@ -58,7 +58,107 @@
                                         </div>
                                         <span asp-validation-for="ProductEnTitle" id="inputError" class="bg-red-thunderbird bg-font-red-thunderbird"></span>
                                     </div>
-                                    <!-- کپی کد های برداشته شده در این ناحیه-->
+                                    <div class="col-md-4 col-xl-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div class="input-icon right">
+                                                <i class="fa fa-calendar"></i>
+                                                <input asp-for="ProductCreate" type="text" class="form-control text-center persianDateTime" autocomplete="off" style="cursor: pointer;" placeholder="تاریخ ثبت محصول" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-xl-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div class="input-icon right">
+                                                <i class="fa fa-calendar"></i>
+                                                <input asp-for="ProductUpdate" type="text" class="form-control text-center persianDateTime" autocomplete="off" style="cursor: pointer;" placeholder="تاریخ بروزرسانی محصول" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-xl-8 col-sm-8">
+                                        <div class="form-group">
+                                            <div class="input-icon right">
+                                                <i class="icon-folder-alt"></i>
+                                                <input asp-for="Description" class="form-control input-icon right" autocomplete="off" placeholder="توضیحات محصول را به فارسی وارد نمایید." />
+                                            </div>
+                                            <span asp-validation-for="Description" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xl-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label asp-for="Publisherid" class="control-label">لیست انتشارات</label>
+                                            <select asp-for="Publisherid" data-style="btn-primary" class="bs-select selectpicker form-control" asp-items="@(new SelectList(ViewBag.GetAllPublisher, "Publisherid","PublisherFaTitle"))" data-show-subtext="true" data-live-search="true" data-size="2">
+                                            </select>
+                                            <span asp-validation-for="Publisherid" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xl-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label asp-for="Writerid" class="control-label">دسته بندی مؤلفان (نویسنده ها)</label>
+                                            <select asp-for="Writerid" data-style="btn-primary" class="bs-select selectpicker form-control" asp-items="@(new SelectList(ViewBag.GetAllWriter, "Writerid","WriterFaTitle"))" data-show-subtext="true" data-live-search="true" data-size="2">
+                                            </select>
+                                            <span asp-validation-for="Writerid" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xl-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label asp-for="SizeBookid" class="control-label">دسته بندی ساز کتاب</label>
+                                            <select asp-for="SizeBookid" data-style="btn-primary" class="bs-select selectpicker form-control" asp-items="@(new SelectList(ViewBag.GetAllSizeBook, "SizeBookid","SizeBookName"))" data-show-subtext="true" data-live-search="true" data-size="2">
+                                            </select>
+                                            <span asp-validation-for="SizeBookid" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xl-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label asp-for="GroupBookid" class="control-label">دسته بندی گروه کتاب ها</label>
+                                            <select asp-for="GroupBookid" data-style="btn-primary" class="bs-select selectpicker form-control" asp-items="@(new SelectList(ViewBag.GetAllGroupBooks, "GroupBookid","GroupBookTitle"))" data-show-subtext="true" data-live-search="true" data-size="2">
+                                            </select>
+                                            <span asp-validation-for="GroupBookid" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-xl-12 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="input-icon right">
+                                                <i class="icon-folder-alt"></i>
+                                                <input asp-for="Keywords" class="form-control input-icon right" autocomplete="off" placeholder="کلمات کلیدی به جهت سئو را وارد نمایید." />
+                                            </div>
+                                            <span asp-validation-for="Keywords" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-xl-12 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="input-icon right">
+                                                <i class="icon-folder-alt"></i>
+                                                <input asp-for="MetaDescription" class="form-control input-icon right" autocomplete="off" placeholder="تنظیم ویژگی مربوط به توضیحات صفحات به جهت سئو را به فارسی وارد نمایید." />
+                                            </div>
+                                            <span asp-validation-for="MetaDescription" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-xl-12 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="input-icon right">
+                                                <i class="icon-folder-alt"></i>
+                                                <input asp-for="SlugNamaak" class="form-control input-icon right" autocomplete="off" placeholder="تنظیم ویژگی مربوط به نامک جهت توصیف کردن محتوای صفحه به جهت سئو را به فارسی وارد نمایید." />
+                                            </div>
+                                            <span asp-validation-for="SlugNamaak" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xl-6 col-sm-6">
+                                        <div class="form-group">
+                                            <div class="margin-bottom-10 flexbetween">
+                                                <label asp-for="IsActive" style="font-weight: 300;">وضعیت موجودی محصول در انبار</label>
+                                                <input type="checkbox" class="make-switch" data-on-color="success" data-off-color="warning" data-on-text="&nbspموجود&nbsp;<i class='fa fa-check'></i>" data-off-text="&nbspناموجود&nbsp;<i class='fa fa-times'></i>" data-size="small">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xl-6 col-sm-6">
+                                        <div class="form-group">
+                                            <div class="input-icon right">
+                                                <i class="icon-folder-alt"></i>
+                                                <input asp-for="ProductWeith" class="form-control input-icon right" autocomplete="off" placeholder="وزن محصول به گرم" />
+                                            </div>
+                                            @*                                             <span asp-validation-for="ProductWeith" id="inputError" class="bg-red-thunderbird bg-font-red-thunderbird"></span> *@
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-3 col-xl-12 col-sm-12">
                                     <button type="submit" value="ثبت اطلاعات" class="btn-block btn green-jungle mt-ladda-btn ladda-button mt-progress-demo"> ثبت و ذخیره نهایی <i class="fa fa-save ml-2"></i></button>
