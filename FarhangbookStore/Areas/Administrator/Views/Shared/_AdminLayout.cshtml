@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta name="description" content="فروشگاه اینترنتی بانک کتاب شیراز | خوش آمدید" />
+    <meta name="keywords" content="فروشگاه اینترنتی بانک کتاب شیراز" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:locale" content="fa_IR" />
+    <meta property="og:type" content="فروشگاه اینترنتی بانک کتاب شیراز" />
+    <meta property="og:title" content="فروشگاه اینترنتی بانک کتاب شیراز" />
+    <meta property="og:url" content="http://www.farhangbooks.ir" />
+    <meta property="og:site_name" content="فروشگاه اینترنتی بانک کتاب شیراز" />
+    <!-- BEGIN CSS -->
+    <partial name="_SiteReferencesCSS" />
+    @RenderSection("styles", required: false)
+    <!-- END CSS -->
+</head>
+@* page-sidebar-fixed *@
+<body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo page-md">
+    <!-- BEGIN HEADER -->
+    <div class="page-header navbar navbar-fixed-top">
+        <!-- BEGIN HEADER INNER -->
+        <div class="page-header-inner ">
+            <!-- BEGIN LOGO -->
+            <div class="page-logo">
+                @*کامپوننت لوگوی پنل مدیریت*@
+                @await Component.InvokeAsync("Admin_HeaderLogo")
+            </div>
+            <!-- END LOGO -->
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <!-- BEGIN PAGE ACTIONS -->
+            <!-- DOC: Remove "hide" class to enable the page header actions -->
+            <div class="page-actions">
+                <div class="btn-group">
+                    @*کامپوننت دسترسی سریع پنل مدیریت*@
+                    @await Component.InvokeAsync("Admin_QuickAccess")
+                </div>
+            </div>
+            <!-- END PAGE ACTIONS -->
+            <!-- BEGIN PAGE TOP -->
+            <div class="page-top">
+                <!-- BEGIN TOP NAVIGATION MENU -->
+                <div class="top-menu">
+                    <ul class="nav navbar-nav pull-right">
+                        <li class="separator hide"> </li>
+                        <!-- BEGIN NOTIFICATION DROPDOWN -->
+                        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                        <li class="dropdown dropdown-extended">
+                            @*کامپوننت نمایش تاریخ شمسی*@
+                            @await Component.InvokeAsync("Admin_TopBarShamsiDate")
+                        </li>
+                        <!-- END NOTIFICATION DROPDOWN -->
+                        <li class="separator hide"> </li>
+                        <!-- BEGIN USER LOGIN DROPDOWN -->
+                        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                        <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_notification_bar">
+                            @*کامپوننت ناحیه اعلانات پنل مدیریت*@
+                            @await Component.InvokeAsync("Admin_Notification")
+                        </li>
+                        <!-- END NOTIFICATION DROPDOWN -->
+                        <li class="separator hide"> </li>
+                        <!-- BEGIN USER LOGIN DROPDOWN -->
+                        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                        <li class="dropdown dropdown-user dropdown-dark">
+                            @*کامپوننت پروفایل کاربری پنل مدیریت*@
+                            @await Component.InvokeAsync("Admin_ProfileTopBar")
+                        </li>
+                        <!-- END USER LOGIN DROPDOWN -->
+
+                    </ul>
+                </div>
+                <!-- END TOP NAVIGATION MENU -->
+            </div>
+            <!-- END PAGE TOP -->
+        </div>
+        <!-- END HEADER INNER -->
+    </div>
+    <!-- END HEADER -->
+    <!-- BEGIN HEADER & CONTENT DIVIDER -->
+    <div class="clearfix"> </div>
+    <!-- END HEADER & CONTENT DIVIDER -->
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container">
+        <!-- BEGIN SIDEBAR -->
+        <div class="page-sidebar-wrapper">
+            @*کامپوننت اساید پنل مدیریت*@
+            @await Component.InvokeAsync("Admin_Aside")
+        </div>
+        <!-- END SIDEBAR -->
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+            <!-- BEGIN CONTENT BODY -->
+            <div class="page-content">
+                @RenderBody()
+            </div>
+            <!-- END CONTENT BODY -->
+        </div>
+        <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+
+    <!-- BEGIN FOOTER -->
+    <div class="page-footer">
+        @*کامپوننت فووتر پنل مدیریت*@
+        <div class="page-footer-inner">
+            1402-2023 © حقوق بانک کتاب شیراز متعلق به <span class="bold font-blue-ebonyclay" style="font-family:IRANSansWeb(FaNum)_Bold">بانک کتاب شیراز</span> است &nbsp;|&nbsp;
+            <a target="http://www.webnext.ir" href="#">طراحی و توسعه</a>
+        </div>
+        <div class="scroll-to-top" style="display: block;">
+            <i class="icon-arrow-up"></i>
+        </div>
+    </div>
+    <!-- END FOOTER -->
+
+    <!-- START - SCRIPTS -->
+    <partial name="_SiteReferencesJS" />
+    @RenderSection("scripts", required: false)
+    @await RenderSectionAsync("AdminScripts", false)
+    @await RenderSectionAsync("MainScripts", false)
+    <!-- END - SCRIPTS -->
+
+    @await Component.InvokeAsync("NToastNotify")
+</body>
+</html>

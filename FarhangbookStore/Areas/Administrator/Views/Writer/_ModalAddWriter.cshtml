@@ -1,0 +1,28 @@
+﻿@model FarhangbookStore.DataModel.Entities.TBL_ProductWriter
+<!--begin:Form-->
+<div class="modal-header bg-blue-steel bg-font-blue-steel">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" data-keyboard="false" data-backdrop="static"></button>
+    <h5 class="modal-title"> ثبت اطلاعات نویسنده یا مؤلفین</h5>
+</div>
+
+<form asp-action="AddWriter" method="post" data-ajax="true" data-Success="Refresh" enctype="multipart/form-data">
+    <div class="modal-body">
+        <div class="d-flex flex-column nav-group nav-group-outline mx-auto mb-10 p-10">
+            <div class="row mt-10">
+                <div class="col-lg-12 mb-10 mb-lg-0">
+                    <label asp-for="WriterFaTitle" class="fs-6 mb-2 text-dark">نام نویسنده به فارسی</label>
+                    <input type="text" asp-for="WriterFaTitle" autofocus="autofocus" class="form-control form-control-solid">
+                    <span asp-validation-for="WriterFaTitle" id="inputError" class="bg-red-thunderbird bg-font-red-thunderbird"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end::Inputs-->
+    <!--begin::Actions-->
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-outline green-jungle"><i class="ki-duotone ki-plus fs-2"></i><span class="indicator-label">ثبت اطلاعات</span></button>
+        <button type="button" class="btn dark btn-outline" data-dismiss="modal">انصراف</button>
+    </div>
+    <!--end::Actions-->
+</form>
+<!--end:Form-->

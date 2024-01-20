@@ -1,0 +1,235 @@
+﻿@model FarhangbookStore.DataModel.Entities.TBL_Product
+@inject FarhangbookStore.PublicExtentions.ConvertDate convertDate
+@{
+    ViewData["Title"] = "ثبت محصول جدید | فروشگاه اینترنتی بانک کتاب شیراز";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<link href="~/lib/persiandatepicker/jquery.Bootstrap-PersianDateTimePicker.css" rel="stylesheet" asp-append-version="true" />
+<link href="/Admin/persiandate/persian-datepicker.css" rel="stylesheet" asp-append-version="true" />
+
+<div class="m-heading-1 border-yellow-crusta m-bordered">
+    <h4 class="bold">راهنما</h4>
+    <p>
+        کاربرگرامی: شما در این بخش می توانید علاوه بر <span class="bold">ثبت محصول جدید</span>، جهت مدیرت محصول ثبت شده بر روی دکمه <span class="bold">مدیریت محصول</span> کلیک نمایید.
+    </p>
+</div>
+<!-- BEGIN CONTAINER -->
+<div class="portlet light portlet-fit portlet-datatable bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-folder-alt font-green"></i>
+            <span class="caption-subject font-green-sharp bold uppercase tooltips" data-container="body" data-placement="top" data-original-title="Tooltip in top">ثبت محصول جدید</span>
+        </div>
+        <div class="actions">
+            <a href="#" role="button" class="btn btn-outline red-thunderbird" id="Refresh_blockui"> بروزرسانی داده ها <i class="fa-solid fa fa-refresh fa-spinner fa-spin"></i></a>
+            <a asp-area="Administrator" asp-controller="Product" asp-action="ShowallProduct" role="button" class="btn green-jungle"> مدیریت محصولات </a>
+            <a asp-area="Administrator" asp-controller="Home" asp-action="Index" role="button" class="btn dark btn-outline popovers" data-trigger="hover" data-placement="top" data-content="بازگشت به پنل مدیریت"> بازگشت به پنل مدیریت <i class="fa fa-angle-left"></i></a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <!-- PERSONAL INFO TAB -->
+        <form asp-area="Administrator" asp-controller="Product" asp-action="AddProduct" enctype="multipart/form-data">
+            <div class="portlet-title">
+                <div class="row">
+                    <div class="col-md-9 col-xl-9 col-sm-9">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">اطلاعات محصول جدید</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <div class="col-md-4 col-xl-4 col-sm-4">
+                                        <div class="input-icon right">
+                                            <i class="icon-folder-alt"></i>
+                                            <input asp-for="ProductFaTitle" class="form-control input-icon right" autofocus="autofocus" autocomplete="off" placeholder="نام محصول به فارسی" />
+                                        </div>
+                                        <span asp-validation-for="ProductFaTitle" id="inputError" class="bg-red-thunderbird bg-font-red-thunderbird"></span>
+                                    </div>
+                                    <div class="col-md-4 col-xl-4 col-sm-4">
+                                        <div class="input-icon right">
+                                            <i class="icon-folder-alt"></i>
+                                            <input asp-for="ProductEnTitle" class="form-control input-icon right EN__Font" autocomplete="off" placeholder="Product name in English" />
+                                        </div>
+                                        <span asp-validation-for="ProductEnTitle" id="inputError" class="bg-red-thunderbird bg-font-red-thunderbird"></span>
+                                    </div>
+                                    <!-- کپی کد های برداشته شده در این ناحیه-->
+                                </div>
+                                <div class="col-md-3 col-xl-12 col-sm-12">
+                                    <button type="submit" value="ثبت اطلاعات" class="btn-block btn green-jungle mt-ladda-btn ladda-button mt-progress-demo"> ثبت و ذخیره نهایی <i class="fa fa-save ml-2"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xl-3 col-sm-3">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">عکس محصول</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group last">
+                                    <div class="fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail">
+                                            <img id="imgProduct" src="~/Admin/images/upload/bookImage/normalImage/noImage.png" alt="تصویر محصول مورد نظر">
+                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+                                        </div>
+                                        <div class="fileinput-preview fileinput-exists thumbnail"> </div>
+                                        <div class="form-group">
+                                            <label for="upload" class="btn btn-block btn-primary">بارگزاری عکس محصول</label>
+                                            <input asp-for="ProductImage" type="file" id="upload" name="files" class="text-center" style="display: none;">
+                                            <div id="divmessageSUCCESS" class="alert alert-success bg-green-jungle bg-font-green-jungle col-md-12 col-xl-12 col-sm-12 hidden" style="margin-top: 10px;" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <div id="divmessageERROR" class="alert alert-danger bg-red-thunderbird bg-font-red-thunderbird col-md-12 col-xl-12 col-sm-12 hidden" style="margin-top: 10px;" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <label class="margin-top-20 text-center" for="file_default">مشخصات تصویر :</label>
+                                            <label class="EN__textName" for="file_name"><b></b></label>
+                                        </div>
+                                        <input type="button" onclick="UploadImage()" id="btnupload" class="btn btn-info btn-block" value="بارگزاری و نمایش تصویر">
+                                        <span asp-validation-for="ProductImage" class="text-danger"></span>
+                                        <span class="margin-top-10">
+                                            <a href="javascript:;" class="margin-top-10 btn red btn-outline btn-block fileinput-exists" data-dismiss="fileinput"> حذف تصویر <i class="fa fa-trash ml-2"></i> </a>
+                                        </span>
+                                        <div class="clearfix margin-top-20">
+                                            <span class="label label-danger" style="padding: 1px 5px 1px;">نکته مهم !</span>
+                                            <p class="margin-top-10">
+                                                <span class="badge badge-info">1.</span> آپلود عکس تا حداکثر <strong class="font-red-thunderbird"> 512 کیلوبایت </strong> و با پسوند <strong class="font-red-thunderbird">(JPG , PNG)</strong>.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- END PERSONAL INFO TAB -->
+    </div>
+</div>
+<!-- BEGIN LIST CATEGORY -->
+<!-- END LIST CATEGORY -->
+<!-- END CONTAINER -->
+@section MainScripts {
+    <!-- فایل های جاوااسکریپت مربوط به تاریخ شمسی -->
+    <script src="/Admin/persiandate/persian-date.js" asp-append-version="true"></script>
+    <script src="/Admin/persiandate/persian-datepicker.js" asp-append-version="true"></script>
+
+    <script src="~/lib/OpenModal.js" asp-append-version="true"></script>
+    <script src="~/lib/SwalAlert/sweetAlert.js" asp-append-version="true"></script>
+    <!--===================================================================-->
+    <!--اسکریپت جستجوی اطلاعات-->
+    <script>
+        var infoDataTable = $('#Datatable_infoTable').DataTable({
+            paging: true,
+            // pageLength: 5,
+            // نمایش اطلاعات جستجو شده در زیر جدول به صورت فارسی
+            "language": {
+                "url": "\\Admin\\datatables\\fa.json"
+            }
+        });
+        $('#customerSearch').keyup(function () {
+            infoDataTable.search($(this).val()).draw();
+        });
+        // مرتب سازی اطلاعات ردیف جدول
+        infoDataTable.on('order.dt search.dt', function () {
+            let i = 1;
+            // مرتب سازی از ستون 0 که اولین ستون جدول است انجام شود
+            infoDataTable.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+                this.data(i++);
+            });
+        }).draw();
+    </script>
+    <script>
+        // تنظیمات مربوط به عملیات  خواندن داده ها به همراه رابط گرافیکی انیمیشن
+        $('#Refresh_blockui').click(function () {
+            $.blockUI({
+                title: null,
+                message: 'سیستم در حال پذیرش درخواست شماست. لطفاً منتظر بمانید...',
+                css: {
+                    border: 'none',
+                    padding: '22px',
+                    backgroundColor: '#3F51B5',
+                    '-webkit-border-radius': '15px',
+                    '-moz-border-radius': '15px',
+                    allowBodyStretch: true,
+                    opacity: 1.0,
+                    textAlign: 'center',
+                    color: '#fff',
+                    cursor: 'wait',
+                }
+            });
+            setTimeout($.unblockUI, 2500);
+            setTimeout(() => {
+                document.location.reload();
+            }, 2500);
+        });
+    </script>
+    <!--بارگزاری تصویر محصول Ajax اسپرسکت -->
+    <script>
+        var UploadImage = function () {
+            var data = new FormData;
+            var file = $("#upload").get(0);
+            var files = file.files;
+
+            for (var i = 0; i < files.length; i++) {
+                data.append('files', files[i]);
+            }
+
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("UploadFile", "Product", new { area = "Administrator" })',
+                data: data,
+                contentType: false,
+                processData: false,
+            }).done(function (result) {
+                if (result.status == "success") {
+
+                    $("#imgProduct").attr('src', "\\Admin\\images\\upload\\bookImage\\normalImage\\" + result.imagename);
+
+                    $("#divmessageSUCCESS").removeClass('hidden');
+                    $("#divmessageSUCCESS").text("تصویر خبر با موفقیت بارگزاری شد.");
+
+                    $("#IndexImage").val(result.imagename);
+                }
+            }).fail(function (result) {
+                if (result.status != "success") {
+                    $("#divmessageERROR").removeClass('hidden');
+                    $("#divmessageERROR").text("متأسفم... در هنگام بارگزاری تصویر خطایی رخ داد.");
+                }
+            });
+
+        };
+        $('#upload').change(function () {
+            var filename = $('#upload').val();
+            if (filename.substring(3, 11) == 'fakepath') {
+                filename = filename.substring(12);
+            }
+            $("label[for='file_name'] b").html(filename);
+            $("label[for='file_default']").text('نام فایل انتخاب شده : ');
+            if (filename == "") {
+                $("label[for='file_default']").text('هیچ فایل در دسترس نیست!');
+            }
+        });
+    </script>
+    <script>
+        // For Show DateTime Persian
+        $(".persianDateTime").persianDatepicker({
+            format: 'YYYY/MM/DD'
+        });
+        $(".persianDateTime").val('');
+    </script>
+    <!--==================================================================-->
+}
+
+

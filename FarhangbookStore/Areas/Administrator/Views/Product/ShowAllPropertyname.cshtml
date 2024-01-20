@@ -1,0 +1,147 @@
+﻿    @using FarhangbookStore.DataModel.Entities;
+    @model IEnumerable<TBL_PropertyName>
+    @{
+        ViewData["Title"] = "نمایش کلیه اطلاعات ویژه گی ها و خصوصیات | فروشگاه اینترنتی بانک کتاب شیراز";
+        Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+    }
+
+    <div class="m-heading-1 border-yellow-crusta m-bordered">
+        <h4 class="bold">راهنما</h4>
+        <p>
+        کاربرگرامی: شما در این بخش می توانید علاوه بر ثبت ، <span class="bold">ویژه گی و خصوصیات</span> مدیریت اطلاعات ویژه گی و خصوصیات را هم ببینید.
+        </p>
+    </div>
+    <!-- BEGIN CONTAINER -->
+    <div class="portlet light portlet-fit portlet-datatable bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-folder-alt font-green"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">مدیریت اطلاعات ویژه گی و خصوصیات</span>
+            </div>
+            <div class="actions">
+                <a href="#" role="button" class="btn btn-outline red-thunderbird popovers" data-trigger="hover" data-placement="top" data-content="تازه سازی اطلاعات در مواقع ضروری" id="Refresh_blockui"> بروزرسانی داده ها <i class="fa-solid fa fa-refresh fa-spinner fa-spin"></i></a>
+            <a asp-area="Administrator" asp-controller="Product" asp-action="AddProprtyName" role="button" class="btn green-jungle"> ثبت ویژه گی و خصوصیات جدید <i class="fa fa-plus ml-2"></i></a>
+            <a asp-area="Administrator" asp-controller="Home" asp-action="Index" role="button" class="btn dark btn-outline popovers" data-trigger="hover" data-placement="top" data-content="بازگشت به پنل مدیریت"> بازگشت به پنل مدیریت <i class="fa fa-angle-left"></i></a>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <!--نمایش پیغام موفقیت آمیز بودن ثبت یا خطای درج اطلاعات در برنامه-->
+            @if (TempData["Result"] != null)
+            {
+                if (TempData["Result"].ToString() == "true")
+                {
+                    <script>
+                        setTimeout(function () {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: 'ویژه گی ها ثبت شد.',
+                                showConfirmButton: false,
+                                timer: 1800
+                            })
+
+                        }, 50)
+                    </script>
+                }
+                else
+                {
+                    <script>
+                        setTimeout(function () {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: 'عملیات با خطا مواجه شد .',
+                                showConfirmButton: false,
+                                timer: 1800
+                            })
+
+                        }, 50)
+                        @*                     setTimeout(function () { window.location.reload() }, 1890)
+                    break; *@
+                    </script>
+                }
+            }
+            <table id="Datatable_infoTable" class="table table-bordered table-striped table-condensed flip-content table-hover table-header-fixed">
+                <thead>
+                    <tr class="font-white">
+                        <th class="text-center">ردیف</th>
+                        <th class="text-center">نام ویژه گی و خصوصیات</th>
+                        <th class="text-center">عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">@item.PropertyNameId</td>
+                            <td class="text-center">@item.PropertyTitle</td>
+                            <td class="text-center">
+                            <a href="/Administrator/Product/UpdatePropertyName/@item.PropertyNameId" class="btn green-haze btn-circle btn-icon-only btn-default popovers" data-trigger="hover" data-placement="top" data-content="ویرایش اطلاعات">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <partial name="_AdminMainModal" />
+    </div>
+    <!-- END CONTAINER -->
+    @section MainScripts {
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+        <script src="~/lib/persiandatepicker/jquery.Bootstrap-PersianDateTimePicker.js" asp-append-version="true"></script>
+        <script src="~/lib/OpenModal.js" asp-append-version="true"></script>
+        <script src="~/lib/SwalAlert/sweetAlert.js" asp-append-version="true"></script>
+        <!--===================================================================-->
+        <!--اسکریپت جستجوی اطلاعات-->
+        <script>
+                var infoDataTable = $('#Datatable_infoTable').DataTable({
+                    paging: true,
+                    // pageLength: 5,
+                    // نمایش اطلاعات جستجو شده در زیر جدول به صورت فارسی
+                    "language": {
+                        "url": "\\Admin\\datatables\\fa.json"
+                    }
+                });
+            $('#customerSearch').keyup(function () {
+                infoDataTable.search($(this).val()).draw();
+            });
+            // مرتب سازی اطلاعات ردیف جدول
+            infoDataTable.on('order.dt search.dt', function () {
+                let i = 1;
+                // مرتب سازی از ستون 0 که اولین ستون جدول است انجام شود
+                infoDataTable.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+                    this.data(i++);
+                });
+            }).draw();
+        </script>
+        <script>
+            // تنظیمات مربوط به عملیات  خواندن داده ها به همراه رابط گرافیکی انیمیشن
+            $('#Refresh_blockui').click(function () {
+                $.blockUI({
+                    title: null,
+                    message: 'سیستم در حال پذیرش درخواست شماست. لطفاً منتظر بمانید...',
+                    css: {
+                        border: 'none',
+                        padding: '22px',
+                        backgroundColor: '#3F51B5',
+                        '-webkit-border-radius': '15px',
+                        '-moz-border-radius': '15px',
+                        allowBodyStretch: true,
+                        opacity: 1.0,
+                        textAlign: 'center',
+                        color: '#fff',
+                        cursor: 'wait',
+                    }
+                });
+                setTimeout($.unblockUI, 2500);
+                setTimeout(() => {
+                    document.location.reload();
+                }, 2500);
+            });
+        </script>
+        <!--==================================================================-->
+    }
+

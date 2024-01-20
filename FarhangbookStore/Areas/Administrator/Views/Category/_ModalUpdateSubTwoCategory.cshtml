@@ -1,0 +1,39 @@
+﻿@model FarhangbookStore.DataModel.Entities.TBL_ProductCategory
+<!--begin:Form-->
+<div class="modal-header bg-blue-steel bg-font-blue-steel">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" data-keyboard="false" data-backdrop="static"></button>
+	<h5 class="modal-title"> ویرایش زیردسته دوم: <span class="badge bg-blue-ebonyclay bg-font-blue-ebonyclay"> @Model.CategoryFaTitle </span></h5>
+</div>
+
+<form asp-action="UpdateSubTwoCategory" method="post" data-ajax="true" data-Success="Refresh" enctype="multipart/form-data">
+	<div class="modal-body">
+		<!--نمایش آی دی زیردسته دوم جهت ویرایش-->
+		<input type="hidden" asp-for="SubCategory" />
+		<!--نمایش آی دی زیردسته اول جهت یافتن آی دی دوم-->
+		<input type="hidden" asp-for="Categoryid" />
+		<div class="d-flex flex-column nav-group nav-group-outline mx-auto mb-10 p-10">
+			<div class="row mt-10">
+				<div class="col-lg-12 mb-10 mb-lg-0">
+					<div class="row g-9 mb-5">
+						<div class="col-md-6 fv-row">
+							<label asp-for="CategoryFaTitle" class="fs-6 mb-2 text-dark">نام زیردسته دوم به فارسی</label>
+							<input type="text" asp-for="CategoryFaTitle" class="form-control form-control-solid" autofocus="autofocus">
+						</div>
+						<div class="col-md-6 EN__Font fv-row">
+							<label asp-for="CategoryEnTitle" class="fs-6 mb-2 text-dark">Subcategory second name in English</label>
+							<input type="text" asp-for="CategoryEnTitle" class="form-control form-control-solid">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--end::Inputs-->
+	<!--begin::Actions-->
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-outline green-jungle"><i class="ki-duotone ki-plus fs-2"></i><span class="indicator-label">ویرایش اطلاعات</span></button>
+		<button type="button" class="btn dark btn-outline" data-dismiss="modal">انصراف</button>
+	</div>
+	<!--end::Actions-->
+</form>
+<!--end:Form-->

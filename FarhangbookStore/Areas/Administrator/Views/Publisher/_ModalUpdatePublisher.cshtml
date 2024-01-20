@@ -1,0 +1,41 @@
+﻿@model FarhangbookStore.DataModel.Entities.TBL_ProductPublisher
+<!--begin:Form-->
+<div class="modal-header bg-blue-steel bg-font-blue-steel">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" data-keyboard="false" data-backdrop="static"></button>
+	<h5 class="modal-title"> ویرایش ناشر : <span class="badge bg-blue-ebonyclay bg-font-blue-ebonyclay"> @Model.PublisherFaTitle </span></h5>
+</div>
+
+<form asp-action="UpdatePublisher" method="post" data-ajax="true" data-Success="Refresh" enctype="multipart/form-data">
+	<div class="modal-body">
+		<!--نمایش آی دی ناشر جهت ویرایش-->
+		<input type="hidden" asp-for="Publisherid" />
+		<div class="d-flex flex-column nav-group nav-group-outline mx-auto mb-10 p-10">
+			<div class="row mt-10">
+				<div class="col-lg-6 mb-10 mb-lg-0">
+					<div class="row g-9 mb-5">
+						<div class="col-md-12 fv-row">
+							<label asp-for="PublisherFaTitle" class="fs-6 mb-2 text-dark">نام ناشر یا گروه ناشرین به فارسی</label>
+							<input type="text" asp-for="PublisherFaTitle" class="form-control form-control-solid" autofocus="autofocus">
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 mb-10 mb-lg-0">
+					<div class="row g-9 mb-5">
+						<div class="col-md-12 fv-row EN__Font">
+							<label asp-for="PublisherEnTitle" class="fs-6 mb-2 text-dark">Enter the name of the publisher in English.</label>
+							<input type="text" asp-for="PublisherEnTitle" class="form-control form-control-solid">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--end::Inputs-->
+	<!--begin::Actions-->
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-outline green-jungle"><i class="ki-duotone ki-plus fs-2"></i><span class="indicator-label">ویرایش اطلاعات</span></button>
+		<button type="button" class="btn dark btn-outline" data-dismiss="modal">انصراف</button>
+	</div>
+	<!--end::Actions-->
+</form>
+<!--end:Form-->

@@ -1,0 +1,243 @@
+﻿@model TBL_PropertyName
+@{
+    ViewData["Title"] = "ویرایش خصوصیات و ویژه گی های ثبت شده | فروشگاه اینترنتی بانک کتاب شیراز";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+    //================================================================
+    List<TBL_ProductCategory> TBLProductCategories = ViewBag.Category;
+    List<ViewModel_UpdatePropertyName> viewModelPopertyNameForUpdate = ViewBag.Property;
+    List<ViewModel_UpdatePropertyName> existprop = new List<ViewModel_UpdatePropertyName>();
+}
+
+@section scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<link href="~/lib/persiandatepicker/jquery.Bootstrap-PersianDateTimePicker.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/lib/animated/animate.min.css" rel="stylesheet" asp-append-version="true" />
+
+<div class="m-heading-1 border-yellow-crusta m-bordered">
+    <h4 class="bold">راهنما</h4>
+    <p>
+        کاربرگرامی: شما در این بخش می توانید علاوه بر <span class="bold">ویرایش خصوصیات و ویژه گی جدید برای هر زیردسته</span>، جهت مدیرت خصوصیات و ویژه گی ویرایش شده بر روی دکمه <span class="bold">مدیریت خصوصیات و ویژه گی</span> کلیک نمایید.
+    </p>
+</div>
+<!-- BEGIN CONTAINER -->
+<div class="portlet light portlet-fit portlet-datatable bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-folder-alt font-green"></i>
+            <span class="caption-subject font-green-sharp bold uppercase tooltips" data-container="body" data-placement="top" data-original-title="Tooltip in top">ویرایش خصوصیات و ویژه گی ها</span>
+        </div>
+        <div class="actions">
+            <a href="#" role="button" class="btn btn-outline red-thunderbird" id="Refresh_blockui"> بروزرسانی داده ها <i class="fa-solid fa fa-refresh fa-spinner fa-spin"></i></a>
+            <a asp-area="Administrator" asp-controller="Product" asp-action="ShowAllPropertyname" role="button" class="btn green-jungle"> مدیریت خصوصیات و ویژه گی </a>
+            @*             <a href="#showmodal=@Url.Page("./Index", "Create")" role="button" class="btn btn-outline green-haze"> ثبت کتاب جدید <i class="fa fa-plus ml-2"></i></a> *@
+            <a asp-area="Administrator" asp-controller="Home" asp-action="Index" role="button" class="btn dark btn-outline popovers" data-trigger="hover" data-placement="top" data-content="بازگشت به پنل مدیریت"> بازگشت به پنل مدیریت <i class="fa fa-angle-left"></i> </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="alert alert-warning">
+            <strong>دقت فرمایید!</strong> برای ویرایش خصوصیات یا ویژه گی، ابتدا آن را در کادر زیر انتخاب کرده، سپس به دلخواه می توانید<span class="badge bg-blue-ebonyclay bg-font-blue-ebonyclay"> خصوصیات و  ویژه گی ثبت شده برای هر زیردسته ها </span> حذف نمایید.
+        </div>
+        <!--نمایش پیغام موفقیت آمیز بودن ثبت یا خطای درج اطلاعات در برنامه-->
+        @if (TempData["Result"] != null)
+        {
+            if (TempData["Result"].ToString() == "true")
+            {
+                <script>
+                    setTimeout(function () {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'ویرایش ویژه گی ها انجام شد.',
+                            showConfirmButton: false,
+                            timer: 1800
+                        })
+
+                    }, 50)
+                </script>
+            }
+            else
+            {
+                <script>
+                    setTimeout(function () {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: 'عملیات با خطا مواجه شد .',
+                            showConfirmButton: false,
+                            timer: 1800
+                        })
+
+                    }, 50)
+                    @*                     setTimeout(function () { window.location.reload() }, 1890)
+                break; *@
+                </script>
+            }
+        }
+        <!-- PERSONAL INFO TAB -->
+        <form asp-area="Administrator" asp-controller="Product" asp-action="UpdatePropertyName">
+            <input asp-for="PropertyNameId" type="hidden" />
+
+            <!-- دسته بندی اصلی جهت اضافه کردن زیردسته ID بازگشت مقدار  -->
+            <div class="portlet-title">
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 col-sm-12">
+                        <div class="panel">
+                            <div class="panel-heading bg-blue-steel bg-font-blue-steel">
+                                <h4 class="panel-title text-center bg-blue-steel bg-font-blue-steel">اطلاعات دریافتی جهت ثبت ویژه گی ها</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="text-center col-sm-12 col-md-12">
+                                    <div class="input-icon right">
+                                        <i class="icon-folder-alt"></i>
+                                        <input asp-for="PropertyTitle" class="form-control input-icon right" autofocus="autofocus" placeholder="نام خصوصیات و ویژه گی را وارد نمایید." />
+                                    </div>
+                                    <span asp-validation-for="PropertyTitle" id="inputError" class="bg-red-thunderbird bg-font-red-thunderbird"></span>
+                                    <div class="form-group">
+                                        <button type="button" value="ثبت تگ" class="Add-Category btn-block btn green-jungle"> ثبت ویژه گی برای زیردسته ها<i class="icon-badge ml-2"></i></button>
+                                    </div>
+                                    <div class="form-group">
+                                        <!--نمایش زیردسته های ثبت شده-->
+                                        <select id="select-category" data-style="btn-primary" class="bs-select selectpicker form-control" data-live-search="true" data-size="5">
+                                            @foreach (var item in TBLProductCategories)
+                                            {
+                                                if (viewModelPopertyNameForUpdate.Where(c => c.Categoryid == item.Categoryid).Any())
+                                                {
+                                                    existprop.Add(new ViewModel_UpdatePropertyName
+                                                    {
+                                                        Categoryid = item.Categoryid,
+                                                        PropertyTitle = item.CategoryFaTitle,
+                                                    });
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Categoryid">@item.CategoryFaTitle</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" data-loading-text="در حال بررسی ..." value="ثبت اطلاعات" class="btn-block btn btn-primary mt-ladda-btn ladda-button mt-progress-demo" data-style="slide-left">  ویرایش و ذخیره نهایی<i class="fa fa-save ml-2"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-12">
+                        <div class="panel">
+                            <div class="panel-heading bg-blue-ebonyclay bg-font-blue-ebonyclay">
+                                <h4 class="panel-title text-center bg-blue-ebonyclay bg-font-blue-ebonyclay">نمایش ویژه گی های ثبت شده برای زیردسته های موجود</h4>
+                            </div>
+                            <div class="scroller" style="height: 235px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
+                                <div class="panel-body">
+                                    <div class="text-center col-sm-12 col-md-12">
+                                        <!--نمایش اضافه شدن ویژه گی ها به هر زیردسته-->
+                                        <div class="desc ListCategory">
+                                            @foreach (var item in existprop)
+                                            {
+                                                <div style='height: 30px;width: 100%;border-radius: 4px;margin-bottom: 1.2%;margin-left: 1%;display:inline-block;'>
+                                                    <label class='tag label bg-blue-ebonyclay bg-font-blue-ebonyclay col-md-12'>@item.PropertyTitle</label>
+                                                    <input type='hidden' name='Categoryid' value="@item.Categoryid" />
+                                                    <a style='float:left;top:-37px;display: flex;height: 32px;border-radius: 4px;border-radius: 4px;justify-content: center;align-items: center;' class='badge badge-danger btn btn-danger remove-category'>حذف</a>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- END PERSONAL INFO TAB -->
+    </div>
+</div>
+<!-- BEGIN LIST CATEGORY -->
+<!-- END LIST CATEGORY -->
+<!-- END CONTAINER -->
+@section MainScripts {
+    <script src="~/lib/persiandatepicker/jquery.Bootstrap-PersianDateTimePicker.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+    <script src="~/lib/SwalAlert/sweetAlert.js" asp-append-version="true"></script>
+    <!--===================================================================-->
+    <!--اسکریپت جستجوی اطلاعات-->
+    <script>
+            var infoDataTable = $('#Datatable_infoTable').DataTable({
+                paging: true,
+                // pageLength: 5,
+                // نمایش اطلاعات جستجو شده در زیر جدول به صورت فارسی
+                "language": {
+                    "url": "\\Admin\\datatables\\fa.json"
+                }
+            });
+        $('#customerSearch').keyup(function () {
+            infoDataTable.search($(this).val()).draw();
+        });
+        // مرتب سازی اطلاعات ردیف جدول
+        infoDataTable.on('order.dt search.dt', function () {
+            let i = 1;
+            // مرتب سازی از ستون 0 که اولین ستون جدول است انجام شود
+            infoDataTable.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+                this.data(i++);
+            });
+        }).draw();
+    </script>
+    <script>
+        // تنظیمات مربوط به عملیات  خواندن داده ها به همراه رابط گرافیکی انیمیشن
+        $('#Refresh_blockui').click(function () {
+            $.blockUI({
+                title: null,
+                message: 'سیستم در حال پذیرش درخواست شماست. لطفاً منتظر بمانید...',
+                css: {
+                    border: 'none',
+                    padding: '22px',
+                    backgroundColor: '#3F51B5',
+                    '-webkit-border-radius': '15px',
+                    '-moz-border-radius': '15px',
+                    allowBodyStretch: true,
+                    opacity: 1.0,
+                    textAlign: 'center',
+                    color: '#fff',
+                    cursor: 'wait',
+                }
+            });
+            setTimeout($.unblockUI, 2500);
+            setTimeout(() => {
+                document.location.reload();
+            }, 2500);
+        });
+    </script>
+    <!--اسکریپت ثبت خصوصیات و ویژه گی برای هر زیردسته به صورت جداگانه-->
+    <script>
+        $(".Add-Category").click(function () {
+            if ($("#select-category").val()) {
+                var value = $("#select-category").children("option:selected").val();
+                var text = $("#select-category").children("option:selected").text();
+                $(".ListCategory").append(
+                    "<div style='height: 30px;width: 100%;border-radius: 4px;margin-bottom: 1.2%;margin-left: 1%;display:inline-block;'>"
+                    + "<label class='tag label bg-blue-ebonyclay bg-font-blue-ebonyclay col-md-12'>" + text + "</label>"
+                    + "<input type='hidden' name='Categoryid' value='" + value + "' />"
+                    + "<a style='float:left;top:-37px;display: flex;height: 32px;border-radius: 4px;border-radius: 4px;justify-content: center;align-items: center;' class='badge badge-danger btn btn-danger remove-category'>حذف</a>"
+                    + "</div>"
+                );
+                $("#select-category").children("option:selected").remove();
+            }
+        });
+        $('.ListCategory').delegate(".remove-category", 'click', function () {
+            var content = $(this).parent();
+            var text = content.find($("label")).text();
+            var value = content.find($("input[type=hidden]")).val();
+            $("#select-category").append($('<option>', {
+                value: value,
+                text: text
+            }));
+            content.remove();
+        });
+    </script>
+    <!--==================================================================-->
+}
+

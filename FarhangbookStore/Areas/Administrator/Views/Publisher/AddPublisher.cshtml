@@ -1,0 +1,163 @@
+﻿@model FarhangbookStore.DataModel.Entities.TBL_ProductPublisher
+@inject FarhangbookStore.PublicExtentions.ConvertDate convertDate
+@{
+    ViewData["Title"] = "ثبت اطلاعات ناشر جدید | فروشگاه اینترنتی بانک کتاب شیراز";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<link href="~/lib/persiandatepicker/jquery.Bootstrap-PersianDateTimePicker.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/lib/animated/animate.min.css" rel="stylesheet" asp-append-version="true" />
+
+<div class="m-heading-1 border-yellow-crusta m-bordered">
+    <h4 class="bold">راهنما</h4>
+    <p>
+        کاربرگرامی: شما در این بخش می توانید علاوه بر ثبت ناشر جدید، جهت مدیرت ناشران ثبت شده بر روی دکمه <span class="bold">مدیریت ناشر</span> کلیک نمایید.
+    </p>
+</div>
+<!-- BEGIN CONTAINER -->
+<div class="portlet light portlet-fit portlet-datatable bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-folder-alt font-green"></i>
+            <span class="caption-subject font-green-sharp bold uppercase tooltips" data-container="body" data-placement="top" data-original-title="Tooltip in top">ثبت ناشر جدید</span>
+        </div>
+        <div class="actions">
+            <a href="#" role="button" class="btn btn-outline red-thunderbird" id="Refresh_blockui"> بروزرسانی داده ها <i class="fa-solid fa fa-refresh fa-spinner fa-spin"></i></a>
+            <a asp-area="Administrator" asp-controller="Publisher" asp-action="ShowAllPublisher" role="button" class="btn green-jungle"> مدیریت ناشرین </a>
+            @*             <a href="#showmodal=@Url.Page("./Index", "Create")" role="button" class="btn btn-outline green-haze"> ثبت کتاب جدید <i class="fa fa-plus ml-2"></i></a> *@
+            <a asp-area="Administrator" asp-controller="Home" asp-action="Index" role="button" class="btn dark btn-outline popovers" data-trigger="hover" data-placement="top" data-content="بازگشت به پنل مدیریت"> بازگشت به پنل مدیریت <i class="fa fa-angle-left"></i></a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <!--نمایش پیغام موفقیت آمیز بودن ثبت یا خطای درج اطلاعات در برنامه-->
+        @if (TempData["Result"] != null)
+        {
+            if (TempData["Result"].ToString() == "true")
+            {
+                <script>
+                    setTimeout(function () {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'اطلاعات ناشر ثبت شد.',
+                            showConfirmButton: false,
+                            timer: 1800
+                        })
+
+                    }, 50)
+                </script>
+            }
+            else
+            {
+                <script>
+                    setTimeout(function () {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: 'عملیات با خطا مواجه شد .',
+                            showConfirmButton: false,
+                            timer: 1800
+                        })
+
+                    }, 50)
+                    @*                     setTimeout(function () { window.location.reload() }, 1890)
+                break; *@
+                </script>
+            }
+        }
+        <!-- PERSONAL INFO TAB -->
+        <form asp-area="Administrator" asp-controller="Publisher" asp-action="AddPublisher" enctype="multipart/form-data">
+            <!-- دسته بندی اصلی جهت اضافه کردن زیردسته ID بازگشت مقدار  -->
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-5 col-xl-12 col-sm-12">
+                        <div class="form-group">
+                            @* <label asp-for="CategoryFaTitle" class="control-label"></label> *@
+                            <div class="input-icon right">
+                                <i class="icon-folder-alt"></i>
+                                <input asp-for="PublisherFaTitle" class="form-control input-icon right" autofocus="autofocus" placeholder="نام ناشر را به فارسی وارد نمایید." />
+                            </div>
+                            <span asp-validation-for="PublisherFaTitle" id="inputError" class="bg-red-thunderbird bg-font-red-thunderbird"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-xl-12 col-sm-12">
+                        <div class="form-group">
+                            @* <label asp-for="CategoryEnTitle" class="control-label"></label> *@
+                            <div class="input-icon right">
+                                <i class="icon-folder-alt"></i>
+                                <input asp-for="PublisherEnTitle" class="form-control input-icon right EN__Font" placeholder="Enter the name of the publisher in English." />
+                            </div>
+                        </div>
+                        <span asp-validation-for="PublisherEnTitle" id="inputError" class="bg-red-thunderbird bg-font-red-thunderbird"></span>
+                    </div>
+                    <div class="col-md-2 col-xl-12 col-sm-12">
+                        <button type="submit" data-loading-text="در حال بررسی ..." value="ثبت اطلاعات" class="btn-block btn btn-primary mt-ladda-btn ladda-button mt-progress-demo" data-style="slide-left"> ثبت و ذخیره <i class="fa fa-save ml-2"></i></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- END PERSONAL INFO TAB -->
+    </div>
+</div>
+<!-- END CONTAINER -->
+@section MainScripts {
+    <script src="~/lib/persiandatepicker/calendar.js" asp-append-version="true"></script>
+    <script src="~/lib/persiandatepicker/jquery.Bootstrap-PersianDateTimePicker.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+    <script src="~/lib/SwalAlert/sweetAlert.js" asp-append-version="true"></script>
+    <!--===================================================================-->
+    <!--اسکریپت جستجوی اطلاعات-->
+    <script>
+                        var infoDataTable = $('#Datatable_infoTable').DataTable({
+                paging: true,
+                // pageLength: 5,
+                // نمایش اطلاعات جستجو شده در زیر جدول به صورت فارسی
+                "language": {
+                    "url": "\\Admin\\datatables\\fa.json"
+                }
+            });
+        $('#customerSearch').keyup(function () {
+            infoDataTable.search($(this).val()).draw();
+        });
+        // مرتب سازی اطلاعات ردیف جدول
+        infoDataTable.on('order.dt search.dt', function () {
+            let i = 1;
+            // مرتب سازی از ستون 0 که اولین ستون جدول است انجام شود
+            infoDataTable.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+                this.data(i++);
+            });
+        }).draw();
+    </script>
+    <script>
+        // تنظیمات مربوط به عملیات  خواندن داده ها به همراه رابط گرافیکی انیمیشن
+        $('#Refresh_blockui').click(function () {
+            $.blockUI({
+                title: null,
+                message: 'سیستم در حال پذیرش درخواست شماست. لطفاً منتظر بمانید...',
+                css: {
+                    border: 'none',
+                    padding: '22px',
+                    backgroundColor: '#3F51B5',
+                    '-webkit-border-radius': '15px',
+                    '-moz-border-radius': '15px',
+                    allowBodyStretch: true,
+                    opacity: 1.0,
+                    textAlign: 'center',
+                    color: '#fff',
+                    cursor: 'wait',
+                }
+            });
+            setTimeout($.unblockUI, 2500);
+            setTimeout(() => {
+                document.location.reload();
+            }, 2500);
+        });
+    </script>
+    <!--==================================================================-->
+}
