@@ -85,8 +85,16 @@
                                     </div>
                                     <div class="col-md-6 col-xl-6 col-sm-6">
                                         <div class="form-group">
-                                            <label asp-for="Categoryid" class="control-label">لیست دسته بندی ها</label>
+                                            <label asp-for="Categoryid" class="control-label">لیست دسته بندی اصلی</label>
                                             <select asp-for="Categoryid" data-style="btn-primary" class="bs-select selectpicker form-control" asp-items="@(new SelectList(ViewBag.GetAllCategory, "Categoryid","CategoryFaTitle"))" data-show-subtext="true" data-live-search="true" data-size="2">
+                                            </select>
+                                            <span asp-validation-for="Categoryid" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xl-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label asp-for="Categoryid" class="control-label">لیست زیردسته ها</label>
+                                            <select asp-for="Categoryid" data-style="btn-primary" class="bs-select selectpicker form-control" asp-items="@(new SelectList(ViewBag.GetAllSubCategory, "Categoryid","CategoryFaTitle"))" data-show-subtext="true" data-live-search="true" data-size="2">
                                             </select>
                                             <span asp-validation-for="Categoryid" class="text-danger"></span>
                                         </div>
@@ -113,14 +121,6 @@
                                             <select asp-for="SizeBookid" data-style="btn-primary" class="bs-select selectpicker form-control" asp-items="@(new SelectList(ViewBag.GetAllSizeBook, "SizeBookid","SizeBookName"))" data-show-subtext="true" data-live-search="true" data-size="2">
                                             </select>
                                             <span asp-validation-for="SizeBookid" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-xl-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label asp-for="GroupBookid" class="control-label">دسته بندی گروه کتاب ها</label>
-                                            <select asp-for="GroupBookid" data-style="btn-primary" class="bs-select selectpicker form-control" asp-items="@(new SelectList(ViewBag.GetAllGroupBooks, "GroupBookid","GroupBookTitle"))" data-show-subtext="true" data-live-search="true" data-size="2">
-                                            </select>
-                                            <span asp-validation-for="GroupBookid" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-xl-12 col-sm-12">

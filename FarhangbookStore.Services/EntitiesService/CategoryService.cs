@@ -124,5 +124,10 @@ namespace FarhangbookStore.Services.EntitiesService
         {
             return _Context.TBLProductCategories.Where(c => !c.IsDelete).ToList();
         }
+
+        public List<TBL_ProductCategory> showAllSubThreeCategory()
+        {
+            return _Context.TBLProductCategories.Where(c => c.SubCategory != null).ToList();
+        }
     }
 }

@@ -23,6 +23,8 @@ namespace FarhangbookStore.Services.Interface
 
         List<TBL_ProductCategory> showAllSubCategory(int categoryid);
 
+        List<TBL_ProductCategory> showAllSubThreeCategory();
+
         TBL_ProductCategory findcategorybuyeid(int categoryid);
 
         bool ExistCategory(string fatitle, string entitle, int cateid);

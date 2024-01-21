@@ -82,7 +82,8 @@ namespace FarhangbookStore.Areas.Administrator.Controllers
         public IActionResult AddProduct()
         {
             ViewBag.GetAllCategory = _Categoryservice.ShowAllCategory();
-            //ViewBag.GetAllSubCategory = _Categoryservice.Showsubcategory();
+            ViewBag.GetAllSubCategory = _Categoryservice.Showsubcategory();
+            ViewBag.GetAllSubThreeCategory = _Categoryservice.showAllSubThreeCategory();
             ViewBag.GetAllGroupBooks = _groupBooksService.ShowAllGroupBooks();
             ViewBag.GetAllPublisher = _publisherService.ShowAllPublisher();
             ViewBag.GetAllWriter = _writerService.ShowAllWriter();
@@ -98,7 +99,8 @@ namespace FarhangbookStore.Areas.Administrator.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.GetAllCategory = _Categoryservice.ShowAllCategory();
-                //ViewBag.GetAllSubCategory = _Categoryservice.Showsubcategory();
+                ViewBag.GetAllSubCategory = _Categoryservice.Showsubcategory();
+                ViewBag.GetAllSubThreeCategory = _Categoryservice.showAllSubThreeCategory();
                 ViewBag.GetAllGroupBooks = _groupBooksService.ShowAllGroupBooks();
                 ViewBag.GetAllPublisher = _publisherService.ShowAllPublisher();
                 ViewBag.GetAllWriter = _writerService.ShowAllWriter();
