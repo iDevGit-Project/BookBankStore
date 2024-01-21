@@ -85,6 +85,14 @@
                                     </div>
                                     <div class="col-md-6 col-xl-6 col-sm-6">
                                         <div class="form-group">
+                                            <label asp-for="Categoryid" class="control-label">لیست دسته بندی ها</label>
+                                            <select asp-for="Categoryid" data-style="btn-primary" class="bs-select selectpicker form-control" asp-items="@(new SelectList(ViewBag.GetAllCategory, "Categoryid","CategoryFaTitle"))" data-show-subtext="true" data-live-search="true" data-size="2">
+                                            </select>
+                                            <span asp-validation-for="Categoryid" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xl-6 col-sm-6">
+                                        <div class="form-group">
                                             <label asp-for="Publisherid" class="control-label">لیست انتشارات</label>
                                             <select asp-for="Publisherid" data-style="btn-primary" class="bs-select selectpicker form-control" asp-items="@(new SelectList(ViewBag.GetAllPublisher, "Publisherid","PublisherFaTitle"))" data-show-subtext="true" data-live-search="true" data-size="2">
                                             </select>
@@ -101,7 +109,7 @@
                                     </div>
                                     <div class="col-md-6 col-xl-6 col-sm-6">
                                         <div class="form-group">
-                                            <label asp-for="SizeBookid" class="control-label">دسته بندی ساز کتاب</label>
+                                            <label asp-for="SizeBookid" class="control-label">دسته بندی سایز کتاب</label>
                                             <select asp-for="SizeBookid" data-style="btn-primary" class="bs-select selectpicker form-control" asp-items="@(new SelectList(ViewBag.GetAllSizeBook, "SizeBookid","SizeBookName"))" data-show-subtext="true" data-live-search="true" data-size="2">
                                             </select>
                                             <span asp-validation-for="SizeBookid" class="text-danger"></span>

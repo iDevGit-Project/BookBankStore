@@ -34,6 +34,7 @@ namespace FarhangbookStore.Areas.Administrator.Controllers
             _productSizeBookService = productSizeBookService;
             // گروه بندی دسته بندی ها
             _Categoryservice = Categoryservice;
+
             _productService = productService;
 
             _webHostEnvironment = webHostEnvironment;
@@ -81,7 +82,7 @@ namespace FarhangbookStore.Areas.Administrator.Controllers
         public IActionResult AddProduct()
         {
             ViewBag.GetAllCategory = _Categoryservice.ShowAllCategory();
-            ViewBag.GetAllSubCategory = _Categoryservice.Showsubcategory();
+            //ViewBag.GetAllSubCategory = _Categoryservice.Showsubcategory();
             ViewBag.GetAllGroupBooks = _groupBooksService.ShowAllGroupBooks();
             ViewBag.GetAllPublisher = _publisherService.ShowAllPublisher();
             ViewBag.GetAllWriter = _writerService.ShowAllWriter();
@@ -97,7 +98,7 @@ namespace FarhangbookStore.Areas.Administrator.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.GetAllCategory = _Categoryservice.ShowAllCategory();
-                ViewBag.GetAllSubCategory = _Categoryservice.Showsubcategory();
+                //ViewBag.GetAllSubCategory = _Categoryservice.Showsubcategory();
                 ViewBag.GetAllGroupBooks = _groupBooksService.ShowAllGroupBooks();
                 ViewBag.GetAllPublisher = _publisherService.ShowAllPublisher();
                 ViewBag.GetAllWriter = _writerService.ShowAllWriter();
@@ -118,8 +119,8 @@ namespace FarhangbookStore.Areas.Administrator.Controllers
             //    TempData["Result"] = "false";
             //    return RedirectToAction(nameof(ShowallProduct));
             //}
-            //product.ProductCreate = DateTime.Now;
-            //product.ProductUpdate = DateTime.Now;
+            product.ProductCreate = DateTime.Now;
+            product.ProductUpdate = DateTime.Now;
             //addProducts.ProductImage = imgname;
             int productid = _productService.AddProduct(product);
             TempData["Result"] = productid > 0 ? "true" : "false";
