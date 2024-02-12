@@ -11,7 +11,11 @@
 }
 
 <link href="~/lib/persiandatepicker/jquery.Bootstrap-PersianDateTimePicker.css" rel="stylesheet" asp-append-version="true" />
-<link href="/Admin/persiandate/persian-datepicker.css" rel="stylesheet" asp-append-version="true" />
+
+@* متدی جهت نمایش و کار با تاریخ شمسی *@
+@{
+    string ShamsiDate = @convertDate.ConvertMiladiToShamsi(DateTime.Now, "dddd d MMMM yyyy");
+}
 
 <div class="m-heading-1 border-yellow-crusta m-bordered">
     <h4 class="bold">راهنما</h4>
@@ -62,7 +66,10 @@
                                         <div class="form-group">
                                             <div class="input-icon right">
                                                 <i class="fa fa-calendar"></i>
-                                                <input asp-for="ProductCreate" type="text" class="form-control text-center persianDateTime" autocomplete="off" style="cursor: pointer;" placeholder="تاریخ ثبت محصول" />
+                                                <input asp-for="ProductCreate" type="text" class="form-control text-center" autocomplete="off" id="ProductCreate" name="ProductCreate" style="cursor: pointer;" placeholder="تاریخ ثبت محصول"
+                                                       placeholder="تاریخ خبر"
+                                                       data-MdDateTimePicker="true" data-trigger="click" data-targetselector="#ProductCreate" data-groupid="group1"
+                                                       data-formdate="true" data-enabletimepicker="false" data-placement="bottom" />
                                             </div>
                                         </div>
                                     </div>
@@ -70,7 +77,9 @@
                                         <div class="form-group">
                                             <div class="input-icon right">
                                                 <i class="fa fa-calendar"></i>
-                                                <input asp-for="ProductUpdate" type="text" class="form-control text-center persianDateTime" autocomplete="off" style="cursor: pointer;" placeholder="تاریخ بروزرسانی محصول" />
+                                                <input asp-for="ProductUpdate" type="text" class="form-control text-center" autocomplete="off" id="ProductUpdate" name="ProductUpdate" style="cursor: pointer;" placeholder="تاریخ بروزرسانی محصول" placeholder="تاریخ خبر"
+                                                       data-MdDateTimePicker="true" data-trigger="click" data-targetselector="#ProductUpdate" data-groupid="group1"
+                                                       data-formdate="true" data-enabletimepicker="false" data-placement="bottom" />
                                             </div>
                                         </div>
                                     </div>
@@ -230,8 +239,8 @@
 <!-- END CONTAINER -->
 @section MainScripts {
     <!-- فایل های جاوااسکریپت مربوط به تاریخ شمسی -->
-    <script src="/Admin/persiandate/persian-date.js" asp-append-version="true"></script>
-    <script src="/Admin/persiandate/persian-datepicker.js" asp-append-version="true"></script>
+    <script src="~/lib/persiandatepicker/calendar.js"></script>
+    <script src="~/lib/persiandatepicker/jquery.Bootstrap-PersianDateTimePicker.js"></script>
 
     <script src="~/lib/OpenModal.js" asp-append-version="true"></script>
     <script src="~/lib/SwalAlert/sweetAlert.js" asp-append-version="true"></script>

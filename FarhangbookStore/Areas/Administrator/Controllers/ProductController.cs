@@ -1,4 +1,5 @@
-﻿using FarhangbookStore.DataModel.Entities;
+﻿using FarhangbookStore.Common.PublicTools;
+using FarhangbookStore.DataModel.Entities;
 using FarhangbookStore.PublicExtentions;
 using FarhangbookStore.Services.EntitiesService;
 using FarhangbookStore.Services.Interface;
@@ -46,33 +47,7 @@ namespace FarhangbookStore.Areas.Administrator.Controllers
 
         #endregion
 
-        #region متد بارگزاری فایل عکس در سرور و ثبت آدرس در پایگاه داده
-        public async Task<IActionResult> UploadFile(IEnumerable<IFormFile> files)
-        {
-            var upload = Path.Combine(_webHostEnvironment.WebRootPath, "Admin\\images\\upload\\bookImage\\normalImage\\");
-            var filename = "";
-            foreach (var file in files)
-            {
-                filename = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(file.FileName);
-                using (var fileStreamWebHost = new FileStream(Path.Combine(upload, filename), FileMode.Create))
-                {
-                    await file.CopyToAsync(fileStreamWebHost);
-                }
-            }
-            /////////تغییر سایز عکس و ذخیره
-            InsertShowImageExtention.ImageResizer img = new InsertShowImageExtention.ImageResizer();
-            img.Resize(upload + filename, _webHostEnvironment.WebRootPath + "\\Admin\\images\\upload\\bookImage\\thumbnailimage\\" + filename);
-            return Json(
-                new
-                {
-                    status = "success",
-                    imagename = filename
-                }
-                );
-        }
-        #endregion
-
-        #region متد مربوط به پیکربندی محصولات
+        #region متد مربوط به ثبت محصول جدید
         public IActionResult ShowallProduct()
         {
             return View(_productService.ShowallProduct());
@@ -93,41 +68,41 @@ namespace FarhangbookStore.Areas.Administrator.Controllers
             
         }
 
-        [HttpPost]
-        public IActionResult AddProduct(TBL_Product product)
-        {
-            if (!ModelState.IsValid)
-            {
-                ViewBag.GetAllCategory = _Categoryservice.ShowAllCategory();
-                ViewBag.GetAllSubCategory = _Categoryservice.Showsubcategory();
-                ViewBag.GetAllSubThreeCategory = _Categoryservice.showAllSubThreeCategory();
-                ViewBag.GetAllGroupBooks = _groupBooksService.ShowAllGroupBooks();
-                ViewBag.GetAllPublisher = _publisherService.ShowAllPublisher();
-                ViewBag.GetAllWriter = _writerService.ShowAllWriter();
-                ViewBag.GetAllSizeBook = _productSizeBookService.ShowAllSizeBook();
+		[HttpPost]
+		public IActionResult AddProduct(TBL_Product product, IFormFile file)
+		{
+			if (!ModelState.IsValid)
+			{
+				ViewBag.GetAllCategory = _Categoryservice.ShowAllCategory();
+				ViewBag.GetAllSubCategory = _Categoryservice.Showsubcategory();
+				ViewBag.GetAllSubThreeCategory = _Categoryservice.showAllSubThreeCategory();
+				ViewBag.GetAllGroupBooks = _groupBooksService.ShowAllGroupBooks();
+				ViewBag.GetAllPublisher = _publisherService.ShowAllPublisher();
+				ViewBag.GetAllWriter = _writerService.ShowAllWriter();
+				ViewBag.GetAllSizeBook = _productSizeBookService.ShowAllSizeBook();
+				return View(product);
+			}
+			if (file == null)
+			{
+				ModelState.AddModelError("SliderImg", "لطفا یک تصویر برای محصول خود انتخاب نمایید .");
+				return View(product);
 
-                return View(product);
-            }
-            //if (filePicture == null)
-            //{
-            //    ModelState.AddModelError("ProductImage", "لطفا یک تصویر برای محصول خود انتخاب نمایید .");
-            //    addProducts.ProductImage = "Book.png";
-            //    return View(addProducts);
-            //}
+			}
 
-            //string imgname = UploadImageExtension.CreateImage(filePicture);
-            //if (imgname == "false")
-            //{
-            //    TempData["Result"] = "false";
-            //    return RedirectToAction(nameof(ShowallProduct));
-            //}
-            product.ProductCreate = DateTime.Now;
-            product.ProductUpdate = DateTime.Now;
-            //addProducts.ProductImage = imgname;
-            int productid = _productService.AddProduct(product);
-            TempData["Result"] = productid > 0 ? "true" : "false";
-            return RedirectToAction(nameof(ShowallProduct));
-        }
+			string imgname = UploadImageExtension.CreateImage(file);
+			if (imgname == "false")
+			{
+				TempData["Result"] = "false";
+				return RedirectToAction(nameof(ShowallProduct));
+			}
+			product.ProductCreate = DateTime.Now;
+			product.ProductUpdate = DateTime.Now;
+			product.ProductImage = imgname;
+			int productid = _productService.AddProduct(product);
+			TempData["Result"] = productid > 0 ? "true" : "false";
+			return RedirectToAction(nameof(ShowallProduct));
+
+		}
         #endregion
 
         #region متد ثبت خصوصیات و ویژه گی ها
