@@ -180,47 +180,33 @@
                             <div class="panel-heading">
                                 <h3 class="panel-title">عکس محصول</h3>
                             </div>
-                            <div class="panel-body">
-                                <div class="form-group last">
-                                    <div class="fileinput-new" data-provides="fileinput">
-                                        <div class="fileinput-new thumbnail">
-                                            <img id="imgProduct" src="~/Admin/images/upload/bookImage/normalImage/noImage.png" alt="تصویر محصول مورد نظر">
-                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
-                                        </div>
-                                        <div class="fileinput-preview fileinput-exists thumbnail"> </div>
-                                        <div class="form-group">
-                                            <label for="upload" class="btn btn-block btn-primary">بارگزاری عکس محصول</label>
-                                            <input asp-for="ProductImage" type="file" id="upload" name="files" class="text-center" style="display: none;">
-                                            <div id="divmessageSUCCESS" class="alert alert-success bg-green-jungle bg-font-green-jungle col-md-12 col-xl-12 col-sm-12 hidden" style="margin-top: 10px;" role="alert">
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true">×</span>
-                                                </button>
-                                            </div>
-                                            <div id="divmessageERROR" class="alert alert-danger bg-red-thunderbird bg-font-red-thunderbird col-md-12 col-xl-12 col-sm-12 hidden" style="margin-top: 10px;" role="alert">
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true">×</span>
-                                                </button>
-                                            </div>
-                                            <label class="margin-top-20 text-center" for="file_default">مشخصات تصویر :</label>
-                                            <label class="EN__textName" for="file_name"><b></b></label>
-                                        </div>
-                                        <input type="button" onclick="UploadImage()" id="btnupload" class="btn btn-info btn-block" value="بارگزاری و نمایش تصویر">
-                                        <span asp-validation-for="ProductImage" class="text-danger"></span>
-                                        <span class="margin-top-10">
-                                            <a href="javascript:;" class="margin-top-10 btn red btn-outline btn-block fileinput-exists" data-dismiss="fileinput"> حذف تصویر <i class="fa fa-trash ml-2"></i> </a>
-                                        </span>
-                                        <div class="clearfix margin-top-20">
-                                            <span class="label label-danger" style="padding: 1px 5px 1px;">نکته مهم !</span>
-                                            <p class="margin-top-10">
-                                                <span class="badge badge-info">1.</span> آپلود عکس تا حداکثر <strong class="font-red-thunderbird"> 512 کیلوبایت </strong> و با پسوند <strong class="font-red-thunderbird">(JPG , PNG)</strong>.
-                                            </p>
-                                        </div>
+                            <div class="panel-body imageFlexCenter">
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-new thumbnail" style="width: 170px; height: 150px;">
+                                        <img src="imgProduct" src="~/Admin/images/upload/bookImage/normalImage/noImage.png" alt="تصویر محصول مورد نظر" />
                                     </div>
+                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 170px; max-height: 150px;"> </div>
+                                    <div>
+                                        <span class="btn btn-block btn-primary btn-file margin-top-20">
+                                            <span class="fileinput-new"> انتخاب تصویر کتاب </span>
+                                            <span class="fileinput-exists"> تغییر </span>
+                                            <input type="file" name="file" id="upload">
+                                        </span>
+                                        <a href="javascript:;" class="btn-block btn bg-red-thunderbird bg-font-red-thunderbird fileinput-exists" data-dismiss="fileinput"> حذف </a>
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <span class="label label-danger" style="padding: 1px 5px 1px;">نکته مهم !</span>
+                                    آپلود عکس تا حداکثر <strong class="font-red-thunderbird"> 512 کیلوبایت </strong> و با پسوند <strong class="font-red-thunderbird">(JPG , PNG)</strong>.
+                                </div>
+                                <div class="row">
+                                    <label class="pull-left" for="file_default">مشخصات تصویر :</label>
+                                    <label class="EN__textName pull-right" for="file_name"><b></b></label>
                                 </div>
                             </div>
                         </div>
-                            <button type="submit" value="ثبت اطلاعات" class="btn-block btn green-jungle mt-ladda-btn ladda-button mt-progress-demo"> ثبت و ذخیره نهایی <i class="fa fa-save ml-2"></i></button>
-                    </div>
+                     <button type="submit" value="ثبت اطلاعات" class="btn-block btn green-jungle mt-ladda-btn ladda-button mt-progress-demo"> ثبت و ذخیره نهایی <i class="fa fa-save ml-2"></i>
+                     </button>
                 </div>
             </div>
         </form>
