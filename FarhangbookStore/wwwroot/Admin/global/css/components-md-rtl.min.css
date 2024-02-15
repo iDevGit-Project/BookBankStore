@@ -1490,7 +1490,7 @@ label {
     text-align: start; 
     display: inline-flex;
     white-space: nowrap;
-    width: calc(63%);
+    /*width: calc(63%);*/
     overflow: hidden;
     text-overflow: ellipsis;
 }

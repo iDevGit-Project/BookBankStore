@@ -153,21 +153,21 @@
                                             <span asp-validation-for="SlugNamaak" class="text-danger"></span>
                                         </div>
                                     </div>
-                                    <div class="col-md-8 col-xl-8 col-sm-8">
+                                    <div class="col-md-4 col-xl-4 col-sm-4">
                                         <div class="form-group">
-                                            <label asp-for="IsActive" class="control-label">وضعیت محصول را مشخص نمایید.</label>
+                                            <label asp-for="IsActive" class="control-label">وضعیت محصول</label>
                                             <div class="margin-bottom-10 flexbetween">
                                                 <label asp-for="IsActive" style="font-weight: 300;">نوع وضعیت محصول</label>
-                                                <input type="checkbox" class="make-switch" data-on-color="success" data-off-color="warning" data-on-text="&nbspموجود&nbsp;<i class='fa fa-check'></i>" data-off-text="&nbspناموجود&nbsp;<i class='fa fa-times'></i>" data-size="small">
+                                                <input type="checkbox" class="make-switch" data-on-color="success" data-off-color="warning" data-on-text="&nbsp&nbsp;<i class='fa fa-check'></i>" data-off-text="&nbsp&nbsp;<i class='fa fa-times'></i>" data-size="small">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-8 col-xl-8 col-sm-8">
+                                    <div class="col-md-4 col-xl-4 col-sm-4">
                                         <div class="form-group">
                                             <label asp-for="ProductWeith" class="control-label">وزن محصول به گرم را وارد نمایید.</label>
                                             <div class="input-icon right">
-                                                <i class="icon-folder-alt"></i>
-                                                <input asp-for="ProductWeith" class="form-control input-icon right" autocomplete="off" placeholder="وزن محصول به گرم" />
+                                                <!-- برای تعیین میزان کم یا زیاد کردن عدد مربوطه به فایل جاوااسکریپت این کامپوننت مراجعه نمایید-->
+                                                <input asp-for="ProductWeith" class="form-control input-icon right" autocomplete="off" placeholder="وزن محصول به گرم را به صورت عددی مشخص نمایید." id="touchspin_11" type="text" value="" name="ProductWeith">
                                             </div>
                                         </div>
                                     </div>
@@ -182,12 +182,12 @@
                             </div>
                             <div class="panel-body imageFlexCenter">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
-                                    <div class="fileinput-new thumbnail" style="width: 170px; height: 150px;">
-                                        <img src="imgProduct" src="~/Admin/images/upload/bookImage/normalImage/noImage.png" alt="تصویر محصول مورد نظر" />
+                                    <div class="fileinput-new thumbnail" style="width: 170px;">
+                                        <img src="/Admin/images/upload/bookImage/normalImage/noImage.png" alt="تصویر محصول مورد نظر" />
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 170px; max-height: 150px;"> </div>
                                     <div>
-                                        <span class="btn btn-block btn-primary btn-file margin-top-20">
+                                        <span class="btn btn-block btn-primary btn-file margin-top-10">
                                             <span class="fileinput-new"> انتخاب تصویر کتاب </span>
                                             <span class="fileinput-exists"> تغییر </span>
                                             <input type="file" name="file" id="upload">
@@ -195,13 +195,13 @@
                                         <a href="javascript:;" class="btn-block btn bg-red-thunderbird bg-font-red-thunderbird fileinput-exists" data-dismiss="fileinput"> حذف </a>
                                     </div>
                                 </div>
-                                <div class="clearfix">
+                                <div class="clearfix margin-top-10">
                                     <span class="label label-danger" style="padding: 1px 5px 1px;">نکته مهم !</span>
                                     آپلود عکس تا حداکثر <strong class="font-red-thunderbird"> 512 کیلوبایت </strong> و با پسوند <strong class="font-red-thunderbird">(JPG , PNG)</strong>.
                                 </div>
-                                <div class="row">
-                                    <label class="pull-left" for="file_default">مشخصات تصویر :</label>
-                                    <label class="EN__textName pull-right" for="file_name"><b></b></label>
+                                <div class="row margin-top-10">
+                                    <label for="file_default label label-info">نام تصویر :</label>
+                                    <label class="EN__textName" for="file_name"><b></b></label>
                                 </div>
                             </div>
                         </div>
@@ -234,6 +234,7 @@
                 "url": "\\Admin\\datatables\\fa.json"
             }
         });
+        //===================================================================================
         $('#customerSearch').keyup(function () {
             infoDataTable.search($(this).val()).draw();
         });
@@ -245,6 +246,7 @@
                 this.data(i++);
             });
         }).draw();
+        //===================================================================================
     </script>
     <script>
         // تنظیمات مربوط به عملیات  خواندن داده ها به همراه رابط گرافیکی انیمیشن
@@ -281,30 +283,6 @@
             for (var i = 0; i < files.length; i++) {
                 data.append('files', files[i]);
             }
-
-            $.ajax({
-                type: "post",
-                url: '@Url.Action("UploadFile", "Product", new { area = "Administrator" })',
-                data: data,
-                contentType: false,
-                processData: false,
-            }).done(function (result) {
-                if (result.status == "success") {
-
-                    $("#imgProduct").attr('src', "\\Admin\\images\\upload\\bookImage\\normalImage\\" + result.imagename);
-
-                    $("#divmessageSUCCESS").removeClass('hidden');
-                    $("#divmessageSUCCESS").text("تصویر خبر با موفقیت بارگزاری شد.");
-
-                    $("#IndexImage").val(result.imagename);
-                }
-            }).fail(function (result) {
-                if (result.status != "success") {
-                    $("#divmessageERROR").removeClass('hidden');
-                    $("#divmessageERROR").text("متأسفم... در هنگام بارگزاری تصویر خطایی رخ داد.");
-                }
-            });
-
         };
         $('#upload').change(function () {
             var filename = $('#upload').val();
@@ -314,7 +292,7 @@
             $("label[for='file_name'] b").html(filename);
             $("label[for='file_default']").text('نام فایل انتخاب شده : ');
             if (filename == "") {
-                $("label[for='file_default']").text('هیچ فایل در دسترس نیست!');
+                $("label[for='file_default']").text('هیچ فایلی در دسترس نیست!');
             }
         });
     </script>

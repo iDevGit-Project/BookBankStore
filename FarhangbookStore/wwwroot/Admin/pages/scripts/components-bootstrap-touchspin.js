@@ -4,7 +4,7 @@ var ComponentsBootstrapTouchSpin = function() {
 
         $("#touchspin_1").TouchSpin({
             min: 0,
-            max: 100,
+            max: 100000 ,
             step: 0.1,
             decimals: 2,
             boostat: 5,
