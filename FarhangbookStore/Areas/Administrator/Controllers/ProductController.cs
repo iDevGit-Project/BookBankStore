@@ -15,18 +15,15 @@ namespace FarhangbookStore.Areas.Administrator.Controllers
         #region متد مربوط به پیکربندی کلیه آیتم های مربوط به کالای کتاب
 
         private IProductService _productService;
-        private IGroupBooksService _groupBooksService;
         private IProductSizeBookService _productSizeBookService;
         private IPublisherService _publisherService;
         private IWriterService _writerService;
 		private ICategoryService _Categoryservice;
         private IWebHostEnvironment _webHostEnvironment;
         public ProductController(IProductService productService, ICategoryService Categoryservice, 
-            IGroupBooksService groupBooksService, IProductSizeBookService productSizeBookService, 
+            IProductSizeBookService productSizeBookService, 
             IPublisherService publisherService, IWriterService writerService, IWebHostEnvironment webHostEnvironment)
 		{
-            // گروه بندی کتاب ها
-            _groupBooksService = groupBooksService;
             // گروه بندی انتشارات
             _publisherService = publisherService;
             // گروه بندی مؤلفان
@@ -56,10 +53,7 @@ namespace FarhangbookStore.Areas.Administrator.Controllers
         [HttpGet]
         public IActionResult AddProduct()
         {
-            ViewBag.GetAllCategory = _Categoryservice.ShowAllCategory();
             ViewBag.GetAllSubCategory = _Categoryservice.Showsubcategory();
-            ViewBag.GetAllSubThreeCategory = _Categoryservice.showAllSubThreeCategory();
-            ViewBag.GetAllGroupBooks = _groupBooksService.ShowAllGroupBooks();
             ViewBag.GetAllPublisher = _publisherService.ShowAllPublisher();
             ViewBag.GetAllWriter = _writerService.ShowAllWriter();
             ViewBag.GetAllSizeBook = _productSizeBookService.ShowAllSizeBook();
@@ -73,14 +67,11 @@ namespace FarhangbookStore.Areas.Administrator.Controllers
 		{
 			if (!ModelState.IsValid)
 			{
-				ViewBag.GetAllCategory = _Categoryservice.ShowAllCategory();
 				ViewBag.GetAllSubCategory = _Categoryservice.Showsubcategory();
-				ViewBag.GetAllSubThreeCategory = _Categoryservice.showAllSubThreeCategory();
-				ViewBag.GetAllGroupBooks = _groupBooksService.ShowAllGroupBooks();
-				ViewBag.GetAllPublisher = _publisherService.ShowAllPublisher();
-				ViewBag.GetAllWriter = _writerService.ShowAllWriter();
-				ViewBag.GetAllSizeBook = _productSizeBookService.ShowAllSizeBook();
-				return View(product);
+                ViewBag.GetAllPublisher = _publisherService.ShowAllPublisher();
+                ViewBag.GetAllWriter = _writerService.ShowAllWriter();
+                ViewBag.GetAllSizeBook = _productSizeBookService.ShowAllSizeBook();
+                return View(product);
 			}
 			if (file == null)
 			{

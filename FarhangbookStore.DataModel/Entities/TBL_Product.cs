@@ -90,7 +90,6 @@ namespace FarhangbookStore.DataModel.Entities
         public int Publisherid { get; set; }
         public int Writerid { get; set; }
         public int SizeBookid { get; set; }
-        public int GroupBookid { get; set; }
 
 
         //[NotMapped]
@@ -114,8 +113,6 @@ namespace FarhangbookStore.DataModel.Entities
         [ForeignKey("SizeBookid")]
         public TBL_ProductSizeBook TBLProductSizeBooks { get; set; }
 
-        [ForeignKey("GroupBookid")]
-        public TBL_ProductGroupBooks TBLProductGroupBooks { get; set; }
         //=================================================================
         //public List<TBL_ProductFaviorate> TBLProductFaviorates { get; set; }
         //public List<TBL_ProductReview> TBLProductReviews { get; set; }
